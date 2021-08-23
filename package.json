@@ -56,12 +56,16 @@
     "vary": "^1.1.2"
   },
   "scripts": {
-    "test":"jest"
+    "test": "jest",
+    "lint": "eslint express.js lib"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/LambFerret/NodeJS.git"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^5.16.0"
+  }
 }
