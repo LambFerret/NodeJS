@@ -5,7 +5,8 @@ const app = express()
 const hostname = '127.0.0.1'
 const port = 8000
 const handlers = require('./lib/handlers')
-const bodyParser = require('body-parser')
+const fs = require('fs')
+const tours =require ('./api/tours')
 
 app.engine('hbs', expressHandlebars({
     extname:'hbs',
@@ -16,18 +17,13 @@ app.use(express.static(__dirname + '/public'))
 app.use(express.urlencoded({ extended: false}))
 
 app.post('/process-contact', (req,res)=> {
-
     console.log(`received contact from ${req.body.name} <${req.body.email}>`)
     res.redirect(303, '10-thank you')
 })
 
 
 app.get('/', handlers.home)
-console.log("hoi!")
-
-
 app.get('/about',handlers.about )
-
 // read header
 app.get('/headers',(req,res) => {
     res.type('text/plain')
@@ -46,10 +42,16 @@ app.get('/greeting', (req, res)=> {
 })
 app.get('/no-layout', (req, res)=> res.render('custom-layout', {layout:null}))
 app.get('/custom-layout', (req, res)=> res.render('custom-layout', {layout:'custom'}))
-app.get('text', (req, res)=> {
+app.get('/text', (req, res)=> {
     res.type('text/plain')
     res.send('this is a test')
 })
+
+app.get('/create', (req, res) => {
+})
+
+app.get('/api/tours', (req, res) => res.json(tours.tours))
+
 app.use((err, req, res, next)=> {
     console.error('SERVER ERROR: '+ err.message)
     res.status(500).render('08-error', {message : "dont click me its ERROR!!"})
